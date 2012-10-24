@@ -1,12 +1,12 @@
 This copy of SimpleSAMLphp 1.10.0 is the source from which all modifications
-which are used by Qualys, Inc. are derived. It was downloaded on October 17,
-2012 from Google code:
+by Qualys, Inc. are derived. It was downloaded on October 17, 2012 from
+Google code:
 
     http://code.google.com/p/simplesamlphp/downloads/list
 
-It is published on github.com in compliance with with the LGPL (see COPYING
-in this directory). Note that this toplevel README file (suggested by github)
-is Qualys' first departure from a "pristine" copy of 1.10.0.
+This code is published on github.com in compliance with the LGPL (see COPYING
+in this directory). And note that this toplevel README file (suggested by
+github itself) is the first Qualys modification.
 
 From the project page from SimpleSAMLphp:
 
