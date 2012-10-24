@@ -1,0 +1,44 @@
+This copy of SimpleSAMLphp 1.10.0 is the source from which all modifications
+which are used by Qualys, Inc. are derived. It was downloaded on October 17,
+2012 from Google code:
+
+    http://code.google.com/p/simplesamlphp/downloads/list
+
+It is published on github.com in compliance with with the LGPL (see COPYING
+in this directory). Note that this toplevel README file (suggested by github)
+is Qualys' first departure from a "pristine" copy of 1.10.0.
+
+From the project page from SimpleSAMLphp:
+
+SimpleSAMLphp is an award-winning application written in native PHP that
+deals with authentication. The project is led by UNINETT, has a large user
+base, a helpful user community and a large set of external contributors.
+
+SimpleSAMLphp is mainly focused on providing support for:
+
+SAML 2.0 as a Service Provider.
+SAML 2.0 as a Identity Provider.
+
+But also supports some other identity protocols, such as Shibboleth 1.3,
+A-Select, CAS, OpenID, WS-Federation and OAuth.
+...
+
+Useful links:
+
+The online documentation contains all information required to install and
+configure SimpleSAMLphp, both as a Service Provider and an Identity Provider:
+
+    http://simplesamlphp.org/docs/stable/
+
+The project homepage is here:
+
+    http://simplesamlphp.org/
+
+The mailing lists are here:
+
+    http://simplesamlphp.org/lists
+    https://groups.google.com/forum/?fromgroups#!forum/simplesamlphp
+
+And a list of contributors is here:
+
+    http://simplesamlphp.org/developers
