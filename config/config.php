@@ -263,7 +263,7 @@ $config = array (
 	 * Options to override the default settings for php sessions.
 	 */
 	// make the PHP session easier to identify in the browser:
-	'session.phpsession.cookiename'  => SimpleSAMLSession,
+	'session.phpsession.cookiename'  => 'SimpleSAMLSession',
 	'session.phpsession.savepath'    => null,
 	'session.phpsession.httponly'    => FALSE,
 
