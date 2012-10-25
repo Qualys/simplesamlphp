@@ -85,6 +85,10 @@ abstract class SimpleSAML_SessionHandler {
 		$store = SimpleSAML_Store::getInstance();
 		if ($store === FALSE) {
 			self::$sessionHandler = new SimpleSAML_SessionHandlerPHP();
+		} else if ($store === 'DBSession') {
+			// externally defined class (package should be in
+			// $GLOBALS['ssp_external_dir']):
+			self::$sessionHandler = new SimpleSAML_SessionHandlerDB();
 		} else {
 			self::$sessionHandler = new SimpleSAML_SessionHandlerStore($store);
 		}
