@@ -37,6 +37,29 @@ abstract class SimpleSAML_Auth_Source {
 		$this->authId = $info['AuthId'];
 	}
 
+	/**
+	 * Get authentication source information via the "master config".
+	 *
+	 * @param Bool $required (if true and authsource data cannot be
+	 *     loaded, then throw an exception - if false then we simply
+	 *     return an empty array in this case)
+	 * @return mixed:
+	 *     SimpleSAML_Configuration, or
+	 *     SimpleSAML_AuthSourcesDB
+	 */
+	public static function getAuthSourcesConfig($required=false) {
+		$master_config = SimpleSAML_Configuration::getInstance();
+		$authSourcesStoreType = $master_config->getString('auth.sources.store', NULL);
+		if ($authSourcesStoreType == 'database') {
+			$config = new SimpleSAML_AuthSourcesDB();
+		} else if ($required) {
+			$config = SimpleSAML_Configuration::getConfig('authsources.php');
+		} else {
+			$config = SimpleSAML_Configuration::getOptionalConfig('authsources.php');
+		}
+
+		return $config;
+	}
 
 	/**
 	 * Get sources of a specific type.
@@ -47,7 +70,7 @@ abstract class SimpleSAML_Auth_Source {
 	public static function getSourcesOfType($type) {
 		assert('is_string($type)');
 
-		$config = SimpleSAML_Configuration::getConfig('authsources.php');
+		$config = self::getAuthSourcesConfig(true);
 
 		$ret = array();
 
@@ -234,7 +257,7 @@ abstract class SimpleSAML_Auth_Source {
 		assert('is_null($type) || is_string($type)');
 
 		/* For now - load and parse config file. */
-		$config = SimpleSAML_Configuration::getConfig('authsources.php');
+		$config = self::getAuthSourcesConfig(true);
 
 		$authConfig = $config->getArray($authId, NULL);
 		if ($authConfig === NULL) {
@@ -344,7 +367,7 @@ abstract class SimpleSAML_Auth_Source {
 	 */
 	public static function getSources() {
 
-		$config = SimpleSAML_Configuration::getOptionalConfig('authsources.php');
+		$config = self::getAuthSourcesConfig(false);
 
 		return $config->getOptions();
 	}
