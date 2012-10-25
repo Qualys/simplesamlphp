@@ -63,6 +63,10 @@ abstract class SimpleSAML_Metadata_MetaDataStorageSource {
 		switch($type) {
 			case 'flatfile':
 				return new SimpleSAML_Metadata_MetaDataStorageHandlerFlatFile($sourceConfig);
+			case 'database':
+				// externally defined class (package should
+				// be in $GLOBALS['ssp_external_dir']):
+				return new SimpleSAML_Metadata_MetadataStorageHandlerDB($sourceConfig);
 			case 'xml':
 				return new SimpleSAML_Metadata_MetaDataStorageHandlerXML($sourceConfig);
 			case 'dynamicxml':
