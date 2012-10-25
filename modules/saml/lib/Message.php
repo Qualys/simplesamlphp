@@ -501,9 +501,10 @@ class sspmod_saml_Message {
 		/* Validate Response-element destination. */
 		$currentURL = SimpleSAML_Utilities::selfURLNoQuery();
 		$msgDestination = $response->getDestination();
-		if ($msgDestination !== NULL && $msgDestination !== $currentURL) {
-			throw new Exception('Destination in response doesn\'t match the current URL. Destination is "' .
-				$msgDestination . '", current URL is "' . $currentURL . '".');
+		// note that ACS URLs which are configured with a terminal slash
+		// may have had "index.php" appended automatically by the webserver:
+                if ($msgDestination !== NULL && ($msgDestination !== $currentURL) && ($msgDestination . 'index.php' !== $currentURL)) {
+			throw new Exception('Destination in response doesn\'t match the current URL. Destination is "' . $msgDestination . '", current URL is "' . $currentURL . '".');
 		}
 
 		$responseSigned = self::checkSign($idpMetadata, $response);
@@ -673,9 +674,11 @@ class sspmod_saml_Message {
 				$lastError = 'NotOnOrAfter in SubjectConfirmationData is in the past: ' . $scd->NotOnOrAfter;
 				continue;
 			}
-			if ($scd->Recipient !== NULL && $scd->Recipient !== $currentURL) {
-				$lastError = 'Recipient in SubjectConfirmationData does not match the current URL. Recipient is ' .
-					var_export($scd->Recipient, TRUE) . ', current URL is ' . var_export($currentURL, TRUE) . '.';
+
+			// note that ACS URLs which are configured with a terminal slash
+			// may have had "index.php" appended automatically by the webserver:
+			if ($scd->Recipient !== NULL && ($scd->Recipient !== $currentURL) && ($scd->Recipient . 'index.php' !== $currentURL)) {
+				$lastError = 'Recipient in SubjectConfirmationData does not match the current URL. Recipient is ' . var_export($scd->Recipient, TRUE) . ', current URL is ' . var_export($currentURL, TRUE) . '.';
 				continue;
 			}
 			if ($scd->InResponseTo !== NULL && $response->getInResponseTo() !== NULL && $scd->InResponseTo !== $response->getInResponseTo()) {
