@@ -186,7 +186,16 @@ class sspmod_saml_Auth_Source_SP extends SimpleSAML_Auth_Source {
 
 		$ar = sspmod_saml_Message::buildAuthnRequest($this->metadata, $idpMetadata);
 
-		$ar->setAssertionConsumerServiceURL(SimpleSAML_Module::getModuleURL('saml/sp/saml2-acs.php/' . $this->authId));
+		// Since, according to lines 2061-2067 of the 2005 OASIS standard
+		// for SAML 2.0, IdPs MUST ignore the contents of an "untrusted"
+		// AssertionConsumerServiceURL element in an authRequest, we omit
+		// this element entirely (forcing the IdP to use the "harcoded"
+		// ACS URL which it has configured for this SP). This makes it
+		// harder for misconfiguration on either the SP or IdP side to
+		// create a security hole:
+                // http://docs.oasis-open.org/security/saml/v2.0/saml-core-2.0-os.pdf
+                // http://social.msdn.microsoft.com/Forums/en-US/Geneva/thread/838c9dca-8cb3-4564-a213-f47e1b27064a
+		//$ar->setAssertionConsumerServiceURL(SimpleSAML_Module::getModuleURL('saml/sp/saml2-acs.php/' . $this->authId));
 
 		if (isset($state['SimpleSAML_Auth_Default.ReturnURL'])) {
 			$ar->setRelayState($state['SimpleSAML_Auth_Default.ReturnURL']);
