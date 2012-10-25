@@ -89,3 +89,13 @@ $metadata['https://testidp.wayf.dk'] = array(
 	'SingleLogoutService'  => 'https://testidp.wayf.dk/saml2/idp/SingleLogoutService.php',
 	'certFingerprint'      => '04b3b08bce004c27458b3e85b125273e67ef062b'
 );
+
+$metadata['unique-id-for-remote-IdP-from-perspective-of-this-SP'] = array(
+	'name' => array(
+		'en' => 'Qualys test IdP'
+	),
+	'description' => 'Log in with Qualys test credentials.',
+	'SingleSignOnService' => 'URL-for-SAML2-SSO-Service',
+	'SingleLogoutService' => 'URL-for-SAML2-SLO-Service',
+	'certData' => 'public-cert-data-for-this-IdP'
+);

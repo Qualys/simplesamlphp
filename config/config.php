@@ -262,7 +262,8 @@ $config = array (
 	/*
 	 * Options to override the default settings for php sessions.
 	 */
-	'session.phpsession.cookiename'  => null,
+	// make the PHP session easier to identify in the browser:
+	'session.phpsession.cookiename'  => SimpleSAMLSession,
 	'session.phpsession.savepath'    => null,
 	'session.phpsession.httponly'    => FALSE,
 
@@ -483,8 +484,18 @@ $config = array (
 	 *     array('type' => 'xml', 'file' => 'idp.example.org-idpMeta.xml'),
 	 *     ),
 	 *
+	 * This example reads metadata from an external DB. In this case,
+	 * an instance of class SimpleSAML_Metadata_MetaDataStorageHandlerDB
+	 * will be used to to handle reading the metadata. The class itself
+	 * is not defined in SimpleSAMLphp - the caller must set the string
+	 * value for $GLOBAL['ssp_external_dir'] to be a path to a directory
+	 * containing SimpleSAML_Metadata_MetaDataStorageHandlerDB.inc:
+	 * 'metadata.sources' => array(
+	 *     array('type' => 'database')
+	 *     ),
 	 *
-	 * Default:
+	 * Default (reads metadata files (e.g. saml20-idp-remotes.php) from
+	 * the metadata/ directory):
 	 * 'metadata.sources' => array(
 	 *     array('type' => 'flatfile')
 	 *     ),
@@ -493,6 +504,19 @@ $config = array (
 		array('type' => 'flatfile'),
 	),
 
+	/*
+         * This option controls loading authentication sources information,
+	 * which is loaded from config/authsources.inc by default.
+	 *
+	 * This example reads auth sources information from an external DB.
+	 * It will cause an instance of SimpleSAML_AuthSourcesDB to be used
+	 * for reading auth sources. This class is not itself defined in
+	 * SimpleSAMLphp - the caller must set $GLOBALS['ssp_external_dir']
+	 * to specify a path to a directory which contains a file named
+	 * SimpleSAML_AuthsourcesDB.inc:
+	 * 'auth.sources.store' => 'database',
+	 */
+	//'auth.sources.store' => 'database',
 
 	/*
 	 * Configure the datastore for simpleSAMLphp.
@@ -500,12 +524,19 @@ $config = array (
 	 * - 'phpsession': Limited datastore, which uses the PHP session.
 	 * - 'memcache': Key-value datastore, based on memcache.
 	 * - 'sql': SQL datastore, using PDO.
+	 * - 'DBSession': This config setting will make SimpleSAMLphp
+	 *   use an instance of class SimpleSAML_SessionHandlerDB to
+	 *   handle storing and retrieving SimpleSAMLphp session data.
+	 *   This class is not itself defined in SimpleSAMlphp - the
+	 *   caller must set $GLOBALS['ssp_external_dir'] to specify
+	 *   a path to the directory which contains a file named
+	 *   SimpleSAML_SessionHandlerDB.inc.
 	 *
 	 * The default datastore is 'phpsession'.
 	 *
 	 * (This option replaces the old 'session.handler'-option.)
 	 */
-	'store.type' => 'phpsession',
+	'store.type' => 'DBSession',
 
 
 	/*

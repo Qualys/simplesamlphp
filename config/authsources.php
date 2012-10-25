@@ -344,4 +344,44 @@ $config = array(
 	),
 	*/
 
+	'Qualys-idm-key' => array(
+		// this configuration is for a SAML Service Provider
+		'saml:SP',
+
+		// the entity ID of this SP is included in the authRequests which
+		// are sent to the configured IdP, and may be used by IdP to decide
+		// how to process incoming authRequests:
+		'entityID' => 'unique-id-for-this-SP-from-perspective-of-remote-IdP',
+
+		// the entity ID of the IdP which this SP should use to authenticate
+		// users must match a key in the $metadata array defined in (local)
+		// file metadata/saml20-idp-remote.php:
+		'idp' => 'unique-id-for-remote-IdP-from-perspective-of-this-SP',
+
+		// the URL of the IdP discovery service (cannot use this in "library
+		// mode, so must set value for key 'idp' above):
+		'discoURL' => NULL,
+
+		// QWEB EXTENSIONS:
+		// ----------------
+		// this array specifies how to extract user attribles from the SAML
+		// attributes returned in a samlResponse from the IdP above:
+		'qweb_attributes' => array(
+			'username' => array(
+				'attribute_name' => 'qualysguard_username',
+				'attribute_value_regex' => '/^(.*)$/'
+			)   
+			// other user attributes may be passed in the future
+		),  
+
+		// this subscription ID uniquely specifies the QualysGuard subscription
+		// which is configured to accept authResponses from the IdP above
+		// (the Qualys Assertion Consumer Service uses this information to
+		// verify that the "username" extracted from an authResponse from a
+		// "trusted" IdP belongs to a subscription that actually has a configured
+		// trust relationship with the IdP that generated the authResponse):
+		'qweb_subscription_id' => 12345
+ 
+	)
+
 );
