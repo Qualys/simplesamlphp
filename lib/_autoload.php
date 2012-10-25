@@ -27,7 +27,7 @@ function SimpleSAML_autoload($className) {
 		return;
 	}
 
-	/* Handlig of modules. */
+	/* Handling of modules. */
 	if(substr($className, 0, 7) === 'sspmod_') {
 		$modNameEnd = strpos($className, '_', 7);
 		$module = substr($className, 7, $modNameEnd - 7);
@@ -44,7 +44,15 @@ function SimpleSAML_autoload($className) {
 
 	if(file_exists($file)) {
 		require_once($file);
-	}
+	} else if (isset($GLOBALS['ssp_external_dir'])) {
+		/* Also check externally configured direcory for classes */
+		$ffile = $GLOBALS['ssp_external_dir'] . '/' . $className;
+		if (file_exists($ffile . '.inc')) {
+			require_once($ffile . '.inc');
+		} else if (file_exists($ffile . '.php')) {
+			require_once($ffile . '.php');
+		}
+        }
 }
 
 /* Register autoload function for simpleSAMLphp. */
