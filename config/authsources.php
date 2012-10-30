@@ -370,7 +370,12 @@ $config = array(
 			'username' => array(
 				'attribute_name' => 'qualysguard_username',
 				'attribute_value_regex' => '/^(.*)$/'
-			)   
+			)
+			// if no username found, look up user by "external ID":
+			'external_id' => array(
+				'attribute_name' => 'qualysguard_exernal_id',
+				'attribute_value_regex' => '/^(.*)$/'
+			)
 			// other user attributes may be passed in the future
 		),  
 
